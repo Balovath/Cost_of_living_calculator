@@ -35,20 +35,6 @@ module LivingCostCalc
       erb :start
     end
 
-<<<<<<< HEAD
-    def save_request(doc)
-      File.open("response.json", "w") do |file|
-        file.write(JSON.dump(doc))
-      end
-    end
-
-    def read_request
-      file = File.read("response.json")
-      response = JSON.parse(file)
-    end
-
-=======
->>>>>>> 37539f8 (release)
     # results
     get "/results" do
       city = params[:city]
@@ -58,22 +44,17 @@ module LivingCostCalc
       esc_city = ERB::Util.url_encode(city) # e.g. "St Louis" becomes 'St%20Louis'
       esc_country = ERB::Util.url_encode(country) # e.g. "United States" becomes 'United%20States'
 
-      # Определение URL и параметров запроса
-      url = "https://cost-of-living-and-prices.p.rapidapi.com/prices"
-      params = { city_name: esc_city, country_name: esc_country }
+      url = URI("https://cost-of-living-prices-by-city-country.p.rapidapi.com/get-city?city=#{esc_city}&country=#{esc_country}")
 
-      # Создание соединения с помощью Faraday
-      connection = Faraday.new(url: url) do |conn|
-        conn.response :logger                  # Логирование запросов для отладки
-        conn.adapter Faraday.default_adapter   # Использование стандартного адаптера (Net::HTTP)
-      end
+      conn = Faraday.new(
+        url: url,
+        headers: {
+          "X-RapidAPI-Key" => ENV["RapidAPIKey"],
+          "X-RapidAPI-Host" => ENV["RapidAPIHost"],
+        },
+      )
 
-      # Выполнение GET-запроса с параметрами и заголовками
-      response = connection.get do |req|
-        req.params = params
-        req.headers["X-RapidAPI-Key"] = "e1b5e72bf2mshc3929941f4f4a15p1f54bdjsn2312a4cbb70c"
-        req.headers["X-RapidAPI-Host"] = "cost-of-living-and-prices.p.rapidapi.com"
-      end
+      response = conn.get
 
       @code = response.status
       @results = JSON.parse (response.body)
