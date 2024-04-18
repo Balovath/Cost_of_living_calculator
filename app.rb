@@ -35,6 +35,7 @@ module LivingCostCalc
       erb :start
     end
 
+<<<<<<< HEAD
     def save_request(doc)
       File.open("response.json", "w") do |file|
         file.write(JSON.dump(doc))
@@ -46,6 +47,8 @@ module LivingCostCalc
       response = JSON.parse(file)
     end
 
+=======
+>>>>>>> 37539f8 (release)
     # results
     get "/results" do
       city = params[:city]
