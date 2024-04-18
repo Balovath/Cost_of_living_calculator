@@ -1,18 +1,20 @@
 <div class="container">
     <h1 class="title">Results</h1>
-    <h2 class="title">Can I move to this city?</h2>
-    <hr>
+    <h2 class="title">Cost of living and prices in <%= params[:city] %>, prices of food, rent, shopping, etc. 🇵🇹
+Updated Jul 2023</h2>
     <hr>
     <table>
         <thead>
             <tr>
                 <th>Expense Item</th>
+                <th>Price</th> 
             </tr>
         </thead>
         <tbody>
-            <% @results['data']['children'].each do |result| %>
+            <% @results["prices"].each do |result| %>
                 <tr>
-                    <td><%= result['data']['body'] %></td>
+                   <td><%= result["item_name"] %></td>
+                   <td class="price"><%= "#{result["avg"]} #{@results["prices"][0]["currency_code"]}" %></td>
                 </tr>
             <% end %>
         </tbody>

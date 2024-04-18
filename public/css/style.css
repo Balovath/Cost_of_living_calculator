@@ -1,1 +1,28 @@
 /*Custom styles*/
+
+.container table {
+  width: 100%;
+  border-collapse: collapse; /* Удаляет двойные линии между границами */
+}
+
+.price {
+  text-align: right; /* Выравнивание текста по правому краю */
+}
+
+.container td,
+.container th {
+  border: 1px solid #ddd; /* Добавляет тонкую линию к каждой ячейке */
+  padding: 8px;
+}
+
+.container tr:nth-child(even){background-color: #f2f2f2;} /* Для чередования цвета строк, если нужно */
+
+.container tr:hover {background-color: #ddd;} /* Для эффекта при наведении, если нужно */
+
+.container th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D; /* Цвет фона заголовков */
+  color: white; /* Цвет текста заголовков */
+}
